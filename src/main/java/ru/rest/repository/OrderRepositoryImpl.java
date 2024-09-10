@@ -31,7 +31,7 @@ public class OrderRepositoryImpl implements OrderRepository {
      */
     @Override
     public Order save(Order order) {
-        Long orderId = order.getId();
+        Long orderId = (long) order.getId();
         if (orderId == null) {
             orderId = nextId.getAndIncrement();
             order.setId(Math.toIntExact(orderId));

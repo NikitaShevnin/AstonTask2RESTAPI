@@ -20,7 +20,6 @@
             <artifactId>HikariCP</artifactId>
             <version>5.1.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -30,13 +29,7 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.2.Final</version> <!-- проверьте последнюю версию -->
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
             <version>1.5.2.Final</version>
-            <scope>provided</scope>
         </dependency>
 
     </dependencies>
