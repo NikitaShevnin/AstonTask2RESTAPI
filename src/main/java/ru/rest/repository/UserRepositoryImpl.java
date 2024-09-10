@@ -9,23 +9,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
  * Реализация интерфейса UserRepository, использующая in-memory хранилище.
  */
 public class UserRepositoryImpl implements UserRepository {
     private final Map<Long, User> userMap = new HashMap<>();
-    private long nextId = 1L;
+    private final AtomicLong nextId = new AtomicLong(1L);
 
     @Override
     public User save(User user) {
-
-
-        if (user.getId() == null) {
-            user.setId(nextId++);
+        Long userId = (long) user.getId();
+        if (userId == null) {
+            userId = nextId.getAndIncrement();
+            user.setId(Math.toIntExact(userId));
         }
-        userMap.put(user.getId(), user);
+        userMap.put(userId, user);
         return user;
     }
+
 
     @Override
     public Optional<User> findById(Long id) {

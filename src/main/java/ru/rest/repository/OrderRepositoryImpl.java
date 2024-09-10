@@ -7,22 +7,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Реализация интерфейса OrderRepository, использующая in-memory хранилище.
  */
 public class OrderRepositoryImpl implements OrderRepository {
     private final Map<Long, Order> orderMap = new HashMap<>();
-    private long nextId = 1L;
+    private final AtomicLong nextId = new AtomicLong(1L);
 
     @Override
     public Order save(Order order) {
-        if (order.getId() == null) {
-            order.setId(nextId++);
+        Long orderId = (long) order.getId();
+        if (orderId == null) {
+            orderId = nextId.getAndIncrement();
+            order.setId(Math.toIntExact(orderId));
         }
-        orderMap.put(order.getId(), order);
+        orderMap.put(orderId, order);
         return order;
     }
+
 
     @Override
     public Optional<Order> findById(Long id) {
