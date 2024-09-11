@@ -5,6 +5,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseConnection {
@@ -29,6 +31,26 @@ public class DatabaseConnection {
 
     public static DataSource getDataSource() {
         return dataSource;
+    }
+
+    public static void main(String[] args) {
+        // Получаем DataSource
+        DataSource dataSource = DatabaseConnection.getDataSource();
+
+        try (Connection connection = dataSource.getConnection()) {
+            // Проверяем подключение к базе данных
+            if (connection != null) {
+                System.out.println("Успешное подключение к базе данных!");
+
+                // Выполняем SQL-запросы или другие операции с базой данных
+                // ...
+
+            } else {
+                System.out.println("Не удалось подключиться к базе данных.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 
