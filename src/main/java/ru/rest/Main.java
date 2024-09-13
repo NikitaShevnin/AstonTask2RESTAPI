@@ -10,8 +10,8 @@ public class Main {
         // Настройка HikariCP
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("com.mysql.cj.jdbc.Driver"); // замените на ваш JDBC URL
-        config.setUsername("Task2RestApi"); // замените на имя пользователя
-        config.setPassword("qwerty"); // замените на пароль
+        config.setUsername("root"); // замените на имя пользователя
+        config.setPassword("root"); // замените на пароль
 
         // Создание источника данных
         DataSource dataSource = new HikariDataSource(config);
