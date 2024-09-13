@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API Client</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        button { margin-top: 10px; }
+        pre { background-color: #f8f8f8; padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>REST API Client</h1>
+
+    <h2>Пользователи</h2>
+    <button onclick="fetchUsers()">Получить пользователей</button>
+    <pre id="usersResponse"></pre>
+
+    <h2>Заказы</h2>
+    <button onclick="fetchOrders()">Получить заказы</button>
+    <pre id="ordersResponse"></pre>
+</div>
+
+<script>
+    function fetchUsers() {
+        fetch('http://localhost:8080/users')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('usersResponse').textContent = data;
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+    }
+
+    function fetchOrders() {
+        fetch('http://localhost:8080/orders')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('ordersResponse').textContent = data;
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+    }
+</script>
+</body>
+</html>
