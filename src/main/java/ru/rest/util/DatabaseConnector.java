@@ -5,11 +5,9 @@ import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Properties;
 
-public class DatabaseConnection {
+public class DatabaseConnector {
     private static HikariDataSource dataSource;
 
     static {

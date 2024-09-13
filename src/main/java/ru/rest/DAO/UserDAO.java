@@ -1,7 +1,7 @@
 package ru.rest.DAO;
 
 import ru.rest.entity.User;
-import ru.rest.util.DatabaseConnection;
+import ru.rest.util.DatabaseConnector;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class UserDAO {
 
     public UserDAO() {
         try {
-            this.connection = DatabaseConnection.getDataSource().getConnection();
+            this.connection = DatabaseConnector.getDataSource().getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error connecting to the database", e);
