@@ -23,6 +23,11 @@ public class DatabaseConnection {
             config.setPassword(properties.getProperty("db.password"));
             config.setDriverClassName(properties.getProperty("db.driverClassName"));
 
+            // Настройка пула соединений Hikari
+            config.setMaximumPoolSize(10); // Максимальное количество соединений в пуле
+            config.setConnectionTimeout(30000); // Время ожидания соединения, мс
+            config.setIdleTimeout(600000); // Время бездействия соединения перед закрытием, мс
+
             dataSource = new HikariDataSource(config);
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,25 +37,4 @@ public class DatabaseConnection {
     public static DataSource getDataSource() {
         return dataSource;
     }
-
-    public static void main(String[] args) {
-        // Получаем DataSource
-        DataSource dataSource = DatabaseConnection.getDataSource();
-
-        try (Connection connection = dataSource.getConnection()) {
-            // Проверяем подключение к базе данных
-            if (connection != null) {
-                System.out.println("Успешное подключение к базе данных!");
-
-                // Выполняем SQL-запросы или другие операции с базой данных
-                // ...
-
-            } else {
-                System.out.println("Не удалось подключиться к базе данных.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
-
