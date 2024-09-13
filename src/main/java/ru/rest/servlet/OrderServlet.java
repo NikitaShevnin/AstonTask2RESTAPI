@@ -3,6 +3,9 @@ package ru.rest.servlet;
 import ru.rest.DAO.OrderDAO;
 import ru.rest.entity.Order;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +18,14 @@ import java.io.IOException;
 public class OrderServlet extends HttpServlet {
     private OrderDAO orderDAO;
 
-    public void init() {
-        orderDAO = new OrderDAO();
+    public void init() throws ServletException {
+        try {
+            InitialContext ctx = new InitialContext();
+            DataSource dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/yourDataSource"); // Замените на имя вашего DataSource
+            orderDAO = new OrderDAO(dataSource);
+        } catch (NamingException e) {
+            throw new ServletException("Cannot initialize OrderDAO", e);
+        }
     }
 
     /**
