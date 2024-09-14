@@ -16,43 +16,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO Вам все еще нужно будет заменить "your_database",
- *      "your_username" и "your_password" на актуальные
- *      значения для вашей базы данных.
+ * Класс UserController отвечает за обработку HTTP-запросов, связанных с пользователями.
  */
-
 public class UserController {
 
     private static final ObjectMapper objectMapper = new ObjectMapper()
             .enable(SerializationFeature.INDENT_OUTPUT);
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/your_database";
-    private static final String DB_USER = "your_username";
-    private static final String DB_PASSWORD = "your_password";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/Task2RestApi";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "root";
 
+    /**
+     * Получает информацию о конкретном пользователе по его ID, указанном в URL-пути.
+     *
+     * @param request  объект HttpServletRequest
+     * @param response объект HttpServletResponse
+     * @throws IOException если произошла ошибка ввода-вывода при записи ответа
+     */
     public static void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int userId = Integer.parseInt(request.getPathInfo().substring(1));
-        User user = getUserFromDatabase(userId);
+        List<User> users = getUsersFromDatabase();
+        User user = null;
+        for (User u : users) {
+            if (u.getId() == userId) {
+                user = u;
+                break;
+            }
+        }
         response.setContentType("application/json");
         objectMapper.writeValue(response.getOutputStream(), user);
     }
 
-    private static User getUserFromDatabase(int userId) {
+    /**
+     * Получает список всех пользователей из базы данных.
+     *
+     * @return список пользователей
+     */
+    private static List<User> getUsersFromDatabase() {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-            String sql = "SELECT * FROM users WHERE id = ?";
+            String sql = "SELECT id, first_name, last_name, email FROM users";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return new User(
+            List<User> users = new ArrayList<>();
+            while (resultSet.next()) {
+                users.add(new User(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("email")
-                );
+                ));
             }
+            return users;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 }

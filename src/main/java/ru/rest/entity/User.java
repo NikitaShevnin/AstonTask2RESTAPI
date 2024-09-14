@@ -5,6 +5,18 @@ public class User {
     private String name;
     private String email;
 
+    public User(int id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    public User() {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
     public int getId() {
         return id;
     }

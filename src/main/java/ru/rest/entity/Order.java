@@ -5,6 +5,19 @@ public class Order {
     private String product;
     private int userId; // Foreign key
 
+    // Конструктор без параметров
+    public Order(int id, String product, int userId) {
+        this.id = id;
+        this.product = product;
+        this.userId = userId;
+    }
+    // Конструктор с параметрами
+    public Order() {
+        this.id = id;
+        this.product = product;
+        this.userId = userId;
+    }
+
     public int getId() {
         return id;
     }

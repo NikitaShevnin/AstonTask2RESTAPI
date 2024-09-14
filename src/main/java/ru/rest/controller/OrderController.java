@@ -15,15 +15,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс OrderController отвечает за обработку HTTP-запросов, связанных с заказами.
+ */
 public class OrderController {
 
     private static final ObjectMapper objectMapper = new ObjectMapper()
             .enable(SerializationFeature.INDENT_OUTPUT);
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/your_database";
-    private static final String DB_USER = "your_username";
-    private static final String DB_PASSWORD = "your_password";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/Task2RestApi";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "root";
 
+    /**
+     * Получает заказы для конкретного пользователя на основе параметра userId в HTTP-запросе.
+     *
+     * @param request  объект HttpServletRequest
+     * @param response объект HttpServletResponse
+     * @throws IOException если произошла ошибка ввода-вывода при записи ответа
+     */
     public static void getOrders(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int userId = Integer.parseInt(request.getParameter("userId"));
         List<Order> orders = getOrdersFromDatabase(userId);
@@ -31,6 +41,12 @@ public class OrderController {
         objectMapper.writeValue(response.getOutputStream(), orders);
     }
 
+    /**
+     * Получает заказы из базы данных для указанного userId.
+     *
+     * @param userId ID пользователя, для которого нужно получить заказы
+     * @return список заказов для указанного пользователя
+     */
     private static List<Order> getOrdersFromDatabase(int userId) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             String sql = "SELECT id, product, user_id FROM orders WHERE user_id = ?";
@@ -51,5 +67,4 @@ public class OrderController {
             return null;
         }
     }
-
 }
