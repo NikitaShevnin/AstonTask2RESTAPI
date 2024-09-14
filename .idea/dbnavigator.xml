@@ -38,7 +38,7 @@
     <connection id="f9dd34c9-7ba5-4faa-bb41-61e4a70d8fe9" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="f9dd34c9-7ba5-4faa-bb41-61e4a70d8fe9" dataset="task2restapi.orders" active-filter-id="">
+    <filter-actions connection-id="f9dd34c9-7ba5-4faa-bb41-61e4a70d8fe9" dataset="task2restapi.orders" active-filter-id="EMPTY_FILTER">
       <filter id="6def03a5-80a5-4cd1-8bd5-47b24adde7b3" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="" active="true" />
       </filter>
