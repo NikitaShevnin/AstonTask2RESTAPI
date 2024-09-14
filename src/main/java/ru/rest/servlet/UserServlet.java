@@ -21,7 +21,7 @@ public class UserServlet extends HttpServlet {
     public void init() throws ServletException {
         try {
             InitialContext ctx = new InitialContext();
-            DataSource dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/yourDataSource"); // Замените на имя вашего DataSource
+            DataSource dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/yourDataSource");
             userDAO = new UserDAO(dataSource);
         } catch (NamingException e) {
             throw new ServletException("Cannot initialize UserDAO", e);
