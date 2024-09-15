@@ -43,11 +43,14 @@
         <condition column="id" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
-    <filter-actions connection-id="f9dd34c9-7ba5-4faa-bb41-61e4a70d8fe9" dataset="task2restapi.users" active-filter-id="">
-      <filter id="60b620c3-74b8-41c6-8590-763fcf75aaae" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+    <filter-actions connection-id="f9dd34c9-7ba5-4faa-bb41-61e4a70d8fe9" dataset="task2restapi.users" active-filter-id="60b620c3-74b8-41c6-8590-763fcf75aaae">
+      <filter id="60b620c3-74b8-41c6-8590-763fcf75aaae" name="Filter" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />

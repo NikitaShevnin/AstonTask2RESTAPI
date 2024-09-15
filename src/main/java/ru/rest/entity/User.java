@@ -5,12 +5,14 @@ public class User {
     private String name;
     private String email;
 
+    // Конструктор с параметрами
     public User(int id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
     }
 
+    // Конструктор без параметров
     public User() {
         this.id = id;
         this.name = name;

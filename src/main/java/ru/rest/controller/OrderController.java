@@ -2,12 +2,13 @@ package ru.rest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.sun.net.httpserver.HttpExchange;
 import ru.rest.entity.Order;
-import ru.rest.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ import java.util.List;
 
 /**
  * Класс OrderController отвечает за обработку HTTP-запросов, связанных с заказами.
+ * Контроллер на прямую работает с базой данных без использования сервисов.
  */
 public class OrderController {
 
@@ -66,6 +68,19 @@ public class OrderController {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    public static void getOrders(HttpExchange exchange) throws IOException {
+        int userId = Integer.parseInt(exchange.getRequestURI().getQuery().split("=")[1]);
+        List<Order> orders = getOrdersFromDatabase(userId);
+        sendJsonResponse(exchange, orders);
+    }
+
+    private static void sendJsonResponse(HttpExchange exchange, Object data) throws IOException {
+        byte[] response = objectMapper.writeValueAsBytes(data);
+        exchange.sendResponseHeaders(200, response.length);
+        try (OutputStream outputStream = exchange.getResponseBody()) {
+            outputStream.write(response);
         }
     }
 }
