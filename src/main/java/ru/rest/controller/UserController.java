@@ -17,6 +17,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс {@code UserController} отвечает за обработку запросов, связанных с пользователями.
+ *
+ * @author [Ваше Имя]
+ * @version 1.0
+ */
 public class UserController {
 
     public static final ObjectMapper objectMapper = new ObjectMapper()
@@ -26,11 +32,23 @@ public class UserController {
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
 
+    /**
+     * Обрабатывает запрос на получение списка всех пользователей.
+     *
+     * @param exchange объект, представляющий HTTP-обмен
+     * @throws IOException если возникнут ошибки при обработке HTTP-запроса
+     */
     public static void getUsers(HttpExchange exchange) throws IOException {
         List<User> users = getUsersFromDatabase();
         sendJsonResponse(exchange, users);
     }
 
+    /**
+     * Обрабатывает запрос на получение пользователя по его идентификатору.
+     *
+     * @param exchange объект, представляющий HTTP-обмен
+     * @throws IOException если возникнут ошибки при обработке HTTP-запроса
+     */
     public static void getUserById (HttpExchange exchange) throws IOException {
         int userId = Integer.parseInt(exchange.getRequestURI().getPath().split("/")[2]);
         User user = getUserById(userId);
@@ -44,6 +62,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Обрабатывает запрос на создание нового пользователя.
+     *
+     * @param exchange объект, представляющий HTTP-обмен
+     * @throws IOException если возникнут ошибки при обработке HTTP-запроса
+     */
     public static void createUser(HttpExchange exchange) throws IOException {
         User newUser = readUserFromRequest(exchange);
         if (newUser != null) {
@@ -58,6 +82,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Обрабатывает запрос на обновление пользователя.
+     *
+     * @param exchange объект, представляющий HTTP-обмен
+     * @throws IOException если возникнут ошибки при обработке HTTP-запроса
+     */
     public static void updateUser(HttpExchange exchange) throws IOException {
         int userId = Integer.parseInt(exchange.getRequestURI().getPath().split("/")[2]);
         User updatedUser = readUserFromRequest(exchange);
@@ -79,6 +109,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Обрабатывает запрос на удаление пользователя.
+     *
+     * @param exchange объект, представляющий HTTP-обмен
+     * @throws IOException если возникнут ошибки при обработке HTTP-запроса
+     */
     public static void deleteUser(HttpExchange exchange) throws IOException {
         int userId = Integer.parseInt(exchange.getRequestURI().getPath().split("/")[2]);
         if (deleteUserFromDatabase(userId)) {
@@ -91,6 +127,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Получает список всех пользователей из базы данных.
+     *
+     * @return список пользователей
+     */
     private static List<User> getUsersFromDatabase() {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             String sql = "SELECT id, name, email FROM users";
@@ -112,6 +153,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Получает пользователя по его идентификатору.
+     *
+     * @param userId идентификатор пользователя для поиска
+     * @return найденный пользователь или {@code null}, если пользователь не найден
+     */
     private static User getUserById(int userId) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             String sql = "SELECT id, name, email FROM users WHERE id = ?";
@@ -131,12 +178,25 @@ public class UserController {
         return null;
     }
 
+    /**
+     * Читает пользователя из входящего HTTP-запроса.
+     *
+     * @param exchange объект, представляющий HTTP-обмен
+     * @return прочитанный пользователь или {@code null}, если данные запроса некорректны
+     * @throws IOException если возникнут ошибки при чтении запроса
+     */
     private static User readUserFromRequest(HttpExchange exchange) throws IOException {
         try (InputStream is = exchange.getRequestBody()) {
             return objectMapper.readValue(is, User.class);
         }
     }
 
+    /**
+     * Вставляет нового пользователя в базу данных.
+     *
+     * @param user пользователь, которого необходимо вставить
+     * @return идентификатор вставленного пользователя, или -1 в случае ошибки
+     */
     private static int insertUserIntoDatabase(User user) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             String sql = "INSERT INTO users (name, email) VALUES (?, ?)";
@@ -157,6 +217,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Обновляет данные пользователя в базе данных.
+     *
+     * @param user пользователь с обновленными данными
+     * @return {@code true}, если обновление прошло успешно, {@code false} в противном случае
+     */
     private static boolean updateUserInDatabase(User user) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             String sql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
@@ -172,6 +238,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Удаляет пользователя из базы данных.
+     *
+     * @param userId идентификатор пользователя для удаления
+     * @return {@code true}, если удаление прошло успешно, {@code false} в противном случае
+     */
     private static boolean deleteUserFromDatabase(int userId) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             String sql = "DELETE FROM users WHERE id = ?";
@@ -185,6 +257,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Отправляет JSON-ответ клиенту.
+     *
+     * @param exchange объект, представляющий HTTP-обмен
+     * @param object объект, который необходимо сериализовать и отправить как ответ
+     * @throws IOException если возникнут ошибки при отправке ответа
+     */
     private static void sendJsonResponse(HttpExchange exchange, Object object) throws IOException {
         exchange.getResponseHeaders().add("Content-Type", "application/json");
         byte[] responseBytes = objectMapper.writeValueAsBytes(object);
