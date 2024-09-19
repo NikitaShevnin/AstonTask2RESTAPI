@@ -43,7 +43,7 @@ public class TestOrderController {
 
         // Мокаем статический метод getAllOrders
         PowerMockito.mockStatic(OrderController.class);
-        List<Order> mockOrders = Collections.singletonList(new Order(1, "Product A", 1));
+        List<Order> mockOrders = Collections.singletonList(new Order("Product A", 1));
         PowerMockito.when(OrderService.getAllOrders()).thenReturn(mockOrders);
 
         // Вызов метода
@@ -73,7 +73,7 @@ public class TestOrderController {
         when(exchange.getResponseBody()).thenReturn(outputStream);
 
         // Устанавливаем мока для других методов
-        Order mockOrder = new Order(1, "Product A", 1);
+        Order mockOrder = new Order("Product A", 1);
         PowerMockito.mockStatic(OrderController.class);
 
         // Сценарий: заказ найден
@@ -120,7 +120,7 @@ public class TestOrderController {
         when(exchange.getResponseBody()).thenReturn(outputStream);
 
         // Устанавливаем мока для других методов
-        Order mockOrder = new Order(0, "Product A", 1);
+        Order mockOrder = new Order("Product A", 1);
         PowerMockito.mockStatic(OrderController.class);
 
         // Сценарий: заказ успешно создан
@@ -166,7 +166,7 @@ public class TestOrderController {
         when(exchange.getResponseBody()).thenReturn(outputStream);
 
         // Устанавливаем мока для других методов
-        Order updatedOrder = new Order(0, "Product A", 1);
+        Order updatedOrder = new Order("Product A", 1);
         PowerMockito.mockStatic(OrderController.class);
 
         // Сценарий: заказ успешно обновлен
@@ -275,7 +275,7 @@ public class TestOrderController {
         when(exchange.getRequestURI()).thenReturn(new java.net.URI("/orders/user/1"));
 
         // Сценарий: заказы найдены для пользователя
-        Order order = new Order(1, "Product A", 1);
+        Order order = new Order("Product A", 1);
         List<Order> orders = Collections.singletonList(order);
         when(OrderService.getOrdersByUserId(1)).thenReturn(orders);
 

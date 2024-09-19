@@ -14,11 +14,10 @@ public class Order {
     /**
      * Создает новый экземпляр {@code Order} с указанными идентификатором, наименованием продукта и идентификатором пользователя.
      *
-     * @param id       идентификатор заказа
-     * @param product  наименование продукта
-     * @param userId   идентификатор пользователя, сделавшего заказ
+     * @param product наименование продукта
+     * @param userId  идентификатор пользователя, сделавшего заказ
      */
-    public Order(int id, String product, int userId) {
+    public Order(String product, int userId) {
         this.id = id;
         this.product = product;
         this.userId = userId;

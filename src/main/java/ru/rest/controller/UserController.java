@@ -124,7 +124,7 @@ public class UserController {
      * @return прочитанный пользователь или {@code null}, если данные запроса некорректны
      * @throws IOException если возникнут ошибки при чтении запроса
      */
-    private static User readUserFromRequest(HttpExchange exchange) throws IOException {
+    static User readUserFromRequest(HttpExchange exchange) throws IOException {
         try (InputStream is = exchange.getRequestBody()) {
             return objectMapper.readValue(is, User.class);
         }

@@ -32,7 +32,6 @@ public class OrderService {
             List<Order> orders = new ArrayList<>();
             while (resultSet.next()) {
                 orders.add(new Order(
-                        resultSet.getInt("id"),
                         resultSet.getString("product"),
                         resultSet.getInt("user_id")
                 ));
@@ -50,7 +49,7 @@ public class OrderService {
      * @param orderId идентификатор заказа, который нужно получить.
      * @return объект заказа с указанным идентификатором или null, если заказ не найден или произошла ошибка.
      */
-    public static Order getOrderById (int orderId) {
+    public static Order getOrderById(int orderId) {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             String sql = "SELECT id, product, user_id FROM orders WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -58,7 +57,6 @@ public class OrderService {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return new Order(
-                        resultSet.getInt("id"),
                         resultSet.getString("product"),
                         resultSet.getInt("user_id")
                 );
@@ -151,7 +149,6 @@ public class OrderService {
             List<Order> orders = new ArrayList<>();
             while (resultSet.next()) {
                 orders.add(new Order(
-                        resultSet.getInt("id"),
                         resultSet.getString("product"),
                         resultSet.getInt("user_id")
                 ));
