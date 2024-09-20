@@ -14,10 +14,11 @@ public class User {
     /**
      * Создает новый экземпляр {@code User} с указанными идентификатором, именем и электронной почтой.
      *
+     * @param i
      * @param name  имя пользователя
      * @param email электронная почта пользователя
      */
-    public User(String name, String email) {
+    public User(int i, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;

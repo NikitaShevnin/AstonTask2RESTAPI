@@ -82,7 +82,7 @@ public class TestUserServiceClass {
      */
     @Test
     public void testInsertUserIntoDatabase() {
-        User newUser = new User("Alice Wonder", "alice.wonder@example.com");
+        User newUser = new User(1, "Alice Wonder", "alice.wonder@example.com");
         int newUserId = UserService.insertUserIntoDatabase(newUser);
 
         // Проверяем, что идентификатор нового пользователя больше 0
@@ -101,7 +101,7 @@ public class TestUserServiceClass {
      */
     @Test
     public void testUpdateUserInDatabase() {
-        User userToUpdate = new User("Updated Name", "updated.email@example.com");
+        User userToUpdate = new User(1, "Updated Name", "updated.email@example.com");
         userToUpdate.setId(1); // Обновляем существующего пользователя с id 1
 
         boolean isUpdated = UserService.updateUserInDatabase(userToUpdate);

@@ -26,7 +26,7 @@ public class UserService {
             List<User> users = new ArrayList<>();
             while (resultSet.next()) {
                 users.add(new User(
-                        resultSet.getString("name"),
+                        1, resultSet.getString("name"),
                         resultSet.getString("email")
                 ));
             }
@@ -51,7 +51,7 @@ public class UserService {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return new User(
-                        resultSet.getString("name"),
+                        1, resultSet.getString("name"),
                         resultSet.getString("email")
                 );
             }
