@@ -16,11 +16,11 @@ public class Application {
     public static void main(String[] args) {
         try {
             // Создаем новый экземпляр CustomHttpServer на порту 8080
-            CustomHttpServer httpServer = new CustomHttpServer(8080);
+            CustomHttpServer httpServer = new CustomHttpServer(8085);
 
             // Запускаем HTTP-сервер
             httpServer.start();
-            System.out.println("Сервер запущен. Слушает порт 8080.");
+            System.out.println("Сервер запущен. Слушает порт 8085.");
         } catch (Exception e) {
             // Обрабатываем любые исключения, которые могут возникнуть во время запуска сервера
             e.printStackTrace();
